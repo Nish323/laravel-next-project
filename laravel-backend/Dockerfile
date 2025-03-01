@@ -1,7 +1,5 @@
 FROM php:8.3-fpm
 
-EXPOSE 9000
-
 # 必要なパッケージをインストール
 RUN apt-get update && apt-get install -y \
     libzip-dev zip unzip \
@@ -22,5 +20,8 @@ RUN composer install --no-dev --optimize-autoloader
 
 # キャッシュ最適化
 RUN php artisan config:cache && php artisan route:cache
+
+# ポートを設定
+EXPOSE 9000
 
 CMD ["php-fpm"]

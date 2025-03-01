@@ -18,5 +18,5 @@ COPY --from=builder /app ./
 # ポートを設定
 EXPOSE 3000
 
-# 本番環境サーバーを起動
+# 開発環境サーバーを起動
 CMD ["npm", "run", "start"]
