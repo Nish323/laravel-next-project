@@ -9,10 +9,10 @@ services:
       - ./laravel-backend:/var/www/html
     depends_on:
       - db
-    env_file: 
+    env_file:
       - ./laravel-backend/.env
     healthcheck:
-      test: ["CMD", "php", "artisan", "health:check"]
+      test: [ "CMD", "php", "artisan", "health:check" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -58,17 +58,21 @@ services:
       dockerfile: Dockerfile
     container_name: next-frontend
     volumes:
-      - ./next-frontend:/app
+      - ./next-frontend:/app # ソースコードをホットリロード
+      - /app/node_modules # node_modulesはコンテナ内管理（重要）
     ports:
       - "3000:3000"
     depends_on:
       - laravel-backend
-    command: sh -c "npm run build && npm run start"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://nginx:8000/api" # API URLも確認
+    command: npm run dev
     networks:
       - backend-network
 
 volumes:
   db_data:
+
 
 networks:
   backend-network:

@@ -1,22 +1,15 @@
-# Build stage
-FROM node:20.12.2 AS builder
-WORKDIR /app
-
-# 依存関係をインストール
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-
-# Next.js をビルド
-RUN npm run build
-
-# Production stage
+# 開発用 Dockerfile（ホットリロード前提）
 FROM node:20.12.2
-WORKDIR /app
-COPY --from=builder /app ./
 
-# ポートを設定
+WORKDIR /app
+
+# パッケージファイルだけ先にコピー（キャッシュ効かせるため）
+COPY package.json package-lock.json ./
+
+# 依存関係インストール（ホスト側のnode_modulesと分離）
+RUN npm install
+
 EXPOSE 3000
 
-# 開発環境サーバーを起動
-CMD ["npm", "run", "start"]
+# 開発モードで起動
+CMD ["npm", "run", "dev"]
