@@ -9,3 +9,5 @@ Route::get('/test', function () {
 });
 
 Route::get('/posts', [PostController::class, 'index']);
+
+Route::get('/posts/{post}', [PostController::class, 'show']);
