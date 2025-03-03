@@ -12,7 +12,7 @@ export default async function PostIndex() {
       <h1>Blog Name</h1>
       {posts.map((post: { id: number; title: string; body: string }) => (
         <div key={post.id}>
-          <Link href={`/posts/${post.id}`}>{post.title}</Link>
+          <Link href={`/posts/${post.id}`} className="gap-4 text-blue-400">{post.title}</Link>
           <p>{post.body}</p>
         </div>
       ))}
