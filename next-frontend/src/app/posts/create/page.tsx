@@ -1,12 +1,11 @@
 'use client';
+import { createPost } from '@/actions/post';
 import Link from 'next/link';
-import { createPost } from './actions';
 
 export default function CreatePost() {
   return (
     <main>
       <h1>ブログ作成</h1>
-      {/* action属性にサーバーアクション関数を指定 */}
       <form action={createPost}>
         <div>
           <label htmlFor="title">Title : </label>
