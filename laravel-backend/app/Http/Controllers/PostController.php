@@ -18,7 +18,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Post $post,Request $request)
+    public function store(Post $post, Request $request)
     {
         $post->title = $request->title;
         $post->body = $request->body;
@@ -39,7 +39,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->title = $request->title;
+        $post->body = $request->body;
+
+        $post->save();
     }
 
     /**
