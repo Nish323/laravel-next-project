@@ -25,13 +25,16 @@ export const createPost = async (formData: FormData): Promise<void> => {
   redirect("/posts");
 };
 
-export const updatePost = async (id: string, formData: FormData): Promise<void> => {
+export const updatePost = async (
+  id: string,
+  formData: FormData
+): Promise<void> => {
   const updatedPost: Post = {
     title: formData.get("title")?.toString() ?? "",
     body: formData.get("body")?.toString() ?? "",
   };
 
-  try{
+  try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`, {
       method: "PUT",
       headers: {
@@ -48,6 +51,23 @@ export const updatePost = async (id: string, formData: FormData): Promise<void> 
   }
 
   redirect(`/posts/${id}`);
-}
+};
 
-export default updatePost
+export async function deletePost(formData: FormData) {
+  const id = formData.get("id")?.toString();
+  if (!id) throw new Error("IDが見つかりません");
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    const errorDetail = await res.text(); // エラーの詳細を取得
+    throw new Error(`削除に失敗しました: ${errorDetail}`);
+  }
+
+  redirect("/posts");
+}

@@ -48,8 +48,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function delete(Post $post)
     {
-        //
+        $post->delete();
     }
 }
